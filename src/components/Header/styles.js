@@ -23,7 +23,10 @@ export default makeStyles((theme) => ({
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        marginTop:"2rem"
+        top: 0,
+        left:0,
+        border: "1px solid black",
+        background: "#e7e5e8",
     },
 }))
 ;

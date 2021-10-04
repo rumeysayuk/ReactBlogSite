@@ -3,11 +3,11 @@ import {Search} from "@material-ui/icons";
 import styles from "./styles";
 import {InputBase} from "@material-ui/core";
 
-const Navi = () => {
+const Header = () => {
     const classes = styles();
     return (
             <div className={classes.header}>
-            <h3>Logo</h3>
+            <h3>Rümeysa</h3>
                 <div className={classes.search}>
                     <Search/>
                     <InputBase
@@ -23,4 +23,4 @@ const Navi = () => {
     )
 }
 
-export default Navi;
+export default Header;

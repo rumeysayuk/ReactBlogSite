@@ -1,24 +1,23 @@
-import Navi from "./components/Navi/Navi";
-import CategoryList from "./components/CategoryList";
-import ProductList from "./components/ProductList";
-import {Container, Row, Col} from "reactstrap"
-//import CategoryList2 from "./components/CategoryList2";
-
+import Header from "./components/Header/Header";
+import CategoryList from "./components/Category/CategoryList";
+import {Col, Container, Row} from "reactstrap"
+import Footer from "./components/Footer/Footer";
+import BlogCard from "./components/BlogCards/BlogCard";
+// import ProductList from "./components/Product/ProductList";
 function App() {
-    let ProductInfo={title:"Product List"}
-    let CategoryInfo={title:"Category List"}
     return (
-        <div>
+        <>
+            <Header/>
             <Container>
                 <Row>
-                    <Navi/>
-                </Row>
-                <Row>
-                    <Col xs={3}> <CategoryList title={CategoryInfo.title}/></Col>
-                    <Col xs={9}> <ProductList title={ProductInfo.title}/></Col>
+                    <Col xs={3}> <CategoryList/></Col>
+                    <Col xs={9}> <BlogCard/></Col>
+                    {/*<Col xs={9}> <ProductList/></Col>*/}
                 </Row>
             </Container>
-        </div>
+            <Footer/>
+        </>
+
     );
 }
 

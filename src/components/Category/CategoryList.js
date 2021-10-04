@@ -5,19 +5,20 @@ import axios from "axios";
 const CategoryList = (props) => {
     const [posts, setPosts] = useState([])
     const [visible, setVisible] = useState(3)
-    const getData = async () => {
-        const baseUrl = "https://jsonplaceholder.typicode.com/posts";
-        await axios.get(baseUrl).then(res => setPosts(res.data))
-    }
     const handleMore = () => {
-        console.log(visible)
         if (posts.length > visible) {
             setVisible(visible+3)
         }
     }
     useEffect(() => {
-        getData()
-    }, [])
+        async function getData() {
+
+            const baseUrl = "https://jsonplaceholder.typicode.com/posts";
+            await axios.get(baseUrl).then(res => setPosts(res.data))
+
+        }
+        getData();
+    }, []);
 
     return (
         <div className="mt-3">
@@ -30,7 +31,7 @@ const CategoryList = (props) => {
                     )
                 }
             </ListGroup>
-            <button type={"submit"} onClick={handleMore} className="btn btn-dark mt-5 text-center pl-5">
+            <button type={"submit"} onClick={()=>handleMore()} className="btn btn-dark mt-5 text-center pl-5">
                 Get more...
             </button>
         </div>
