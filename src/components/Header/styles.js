@@ -11,7 +11,6 @@ export default makeStyles((theme) => ({
     },
     inputInput: {
         padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
         transition: theme.transitions.create('width'),
         width: '100%',
@@ -21,13 +20,25 @@ export default makeStyles((theme) => ({
     },
     header: {
         display: "flex",
-        alignItems: "center",
         justifyContent: "space-between",
-        top: 0,
-        left:0,
-        border: "1px solid black",
-        background: "#e7e5e8",
+        boxShadow: "rgba(149, 157, 165, 0.2) 15px 8px 24px;"
     },
+    body: {
+        background: "#2B2E37",
+    },
+
+    logo: {
+        width: "120px",
+        height: "80px",
+        animation: "bounceIn 0.6s",
+        transform: " rotate(0deg) scale(1) translateZ(20)",
+        transition: "all 0.4s cubic-bezier(.8,1.8,.75,.75)",
+        cursor: "pointer",
+        "&:hover": {
+            transform: " rotate(10deg) scale(1.5);",
+        }
+    },
+
 }))
 ;
 

@@ -1,20 +1,27 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Card, CardBody, CardImg, CardText, CardTitle, Col, Container, Row} from "reactstrap";
+import {Button, Card, Col, Container, Row} from "reactstrap";
 import axios from "axios";
 import Draggable from "react-draggable";
-import {Paper, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField} from "@material-ui/core";
+import styles from "./styles"
+import {
+    Paper, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, CardMedia, CardActions,
+    CardContent, Typography
+} from "@material-ui/core";
+
 
 const BlogCard = (props) => {
     const [posts, setPosts] = useState([])
     const baseUrl = "https://6155a14993e3550017b08b1c.mockapi.io/posts";
-    const [visible, setVisible] = useState(4)
+    const [visible, setVisible] = useState(3)
     const [open, setOpen] = useState(false);
     const [currentPost, setCurrentPost] = useState(false);
+    const classes = styles();
 
     const handleClickOpen = async (id) => {
         setCurrentPost(posts.find(p => p.id === id))
         setOpen(true)
     };
+
     const handleClose = () => {
         setOpen(false)
     };
@@ -43,50 +50,72 @@ const BlogCard = (props) => {
             setPosts(filteredData)
         })
     }
+
     const handleMore = () => {
         if (posts.length > visible) {
             setVisible(visible + 3)
         }
     }
+
     const handleDeleteItem = async (id) => {
-        const data = {
-            "delete": "true"
-        };
-        await axios.put(`https://6155a14993e3550017b08b1c.mockapi.io/posts/${id} `, data)
-            .then(() => getData())
-            .catch((err) => {
-                console.log(err)
-            })
+        if (window.confirm("bunu silmek istediğinize emin misiniz ..?")) {
+            const data = {
+                "delete": "true"
+            };
+            await axios.put(`https://6155a14993e3550017b08b1c.mockapi.io/posts/${id} `, data)
+                .then(() => getData())
+                .catch((err) => {
+                    console.log(err)
+                })
+        }
+
     }
 
     useEffect(() => {
-        getData()
+        getData().then()
     }, [])
+
     return (
-        <div className="mt-3 pl-4">
+        <div className="mt-3">
             <h3>{props.title}</h3>
             <Container>
                 <Row>
                     {posts.slice(0, visible).map((post) => (
-                        <Col xs={12} md={6} lg={4} xl={6} key={post.id}>
-                            <Card>
-                                <CardImg top width="100%" src={`https://picsum.photos/200/300?random=${post.id}`}
-                                         alt="Card image cap"/>
-                                <CardBody>
-                                    <CardTitle tag="h5">{post.title}</CardTitle>
-                                    <CardText> {post.body}</CardText>
-                                    <Button className="text-center"
-                                            onClick={() => handleClickOpen(post.id)}>Güncelle</Button>
-                                    <Button className="text-center"
-                                            onClick={() => handleDeleteItem(post.id)}>Sil</Button>
-                                </CardBody>
+                        <Col xs={12} md={6} lg={4} xl={4} key={post.id} className="my-5">
+                            <Card sx={{maxWidth: 345}} className={classes.card}>
+                                <CardMedia
+                                    className={classes.img}
+                                    component="img"
+                                    height="300"
+                                    src={`https://picsum.photos/200/300?random=${post.id}`}
+                                    alt="green iguana"
+                                />
+                                <CardContent>
+                                    <Typography gutterBottom variant="h5" component="div" className="text-center">
+                                        {post.title}
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary" className="text-center">
+                                        {post.body}
+                                    </Typography>
+                                </CardContent>
+                                <CardActions className={classes.icons}>
+                                    <img src="https://img.icons8.com/color/48/000000/edit--v3.png"  alt="green iguana"
+                                         className={classes.icon} onClick={() => handleClickOpen(post.id)}/>
+                                    <img src="https://img.icons8.com/color/48/000000/filled-trash.png"  alt="green iguana"
+                                         className={classes.icon} onClick={() => handleDeleteItem(post.id)}/>
+
+                                </CardActions>
                             </Card>
                         </Col>
                     ))}
                 </Row>
-                <button type={"submit"} onClick={() => handleMore()} className="btn btn-dark mt-5 text-center pl-5">
-                    Get more...
-                </button>
+                <div style={{textAlign: "center"}}>
+                    <button type={"submit"} onClick={() => handleMore()} style={{width:"100%",backgroundColor:"#d8c0f5"}}
+                            className="btn  my-5 text-center pl-5">
+                        Get more...
+                    </button>
+                </div>
+
                 <div>
                     <Dialog open={open} onClose={() => handleClose()} PaperComponent={PaperComponent}
                             aria-labelledby="draggable-dialog-title">

@@ -4,15 +4,14 @@ export default makeStyles(() => ({
     footer: {
         bottom: 0,
         left: 0,
-        position: "fixed",
         height: 50,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         width: "100%",
-        background: "#b18ac2",
         textAlign: "center",
-        border: "1px solid black",
+        boxShadow: "rgba(149, 157, 165, 0.2) 15px 8px 24px;",
+        marginTop:20
     }
 
 }))
