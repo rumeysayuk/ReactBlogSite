@@ -2,15 +2,17 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+
+## Projemin canlıdaki linki :
+
+[LIVE](https://peaceful-brahmagupta-2be7d0.netlify.app/)
+
 ## Available Scripts
 
 In the project directory, you can run:
 
 ### `npm start`
 
-## Projemin canlıdaki linki :
-
-[LIVE](https://barışçıl-brahmagupta-2be7d0.netlify.app)
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
