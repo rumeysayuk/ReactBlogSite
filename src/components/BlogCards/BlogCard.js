@@ -1,21 +1,28 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Card, Col, Container, Row} from "reactstrap";
+import {Card, Col, Container, Row} from "reactstrap";
 import axios from "axios";
-import Draggable from "react-draggable";
 import styles from "./styles"
-import {
-    Paper, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, CardMedia, CardActions,
-    CardContent, Typography
-} from "@material-ui/core";
-
+import {CardMedia, CardActions, CardContent, Typography} from "@material-ui/core";
+import {postsFilterService} from "../../services/postsFilterService";
+import BlogCardDialog from "./BlogCardDialog";
 
 const BlogCard = (props) => {
     const [posts, setPosts] = useState([])
+    const [unchangedPosts, setUnchangedPosts] = useState([])
     const baseUrl = "https://6155a14993e3550017b08b1c.mockapi.io/posts";
     const [visible, setVisible] = useState(3)
     const [open, setOpen] = useState(false);
-    const [currentPost, setCurrentPost] = useState(false);
+    const [currentPost, setCurrentPost] = useState({});
     const classes = styles();
+
+    useEffect(() => {
+        setCurrentPost(posts[0])
+        postsFilterService.getFilterKey().subscribe(filterKey => {
+            if (filterKey) {
+                setPosts(unchangedPosts.filter(p => p.title.toLowerCase().indexOf(filterKey["key"]) !== -1))
+            }
+        })
+    }, [posts, unchangedPosts])
 
     const handleClickOpen = async (id) => {
         setCurrentPost(posts.find(p => p.id === id))
@@ -24,6 +31,9 @@ const BlogCard = (props) => {
 
     const handleClose = () => {
         setOpen(false)
+        let postIndex = posts.findIndex(p => p.id === currentPost.id)
+        posts[postIndex] = currentPost
+        setCurrentPost(null)
     };
 
     const handleEdit = async () => {
@@ -34,20 +44,13 @@ const BlogCard = (props) => {
             })
     }
 
-    function PaperComponent(props) {
-        return (
-            <Draggable>
-                <Paper {...props} />
-            </Draggable>
-        );
-    }
-
     const getData = async () => {
         //https://6155a14993e3550017b08b1c.mockapi.io/posts
         //https://jsonplaceholder.typicode.com/posts
         await axios.get(baseUrl).then((res) => {
             const filteredData = res.data.filter((item) => item.delete === false);
             setPosts(filteredData)
+            setUnchangedPosts(filteredData)
         })
     }
 
@@ -68,7 +71,10 @@ const BlogCard = (props) => {
                     console.log(err)
                 })
         }
+    }
 
+    const valueChange = (e) => {
+        setCurrentPost({...currentPost, [e.target.name]: e.target.value})
     }
 
     useEffect(() => {
@@ -99,9 +105,10 @@ const BlogCard = (props) => {
                                     </Typography>
                                 </CardContent>
                                 <CardActions className={classes.icons}>
-                                    <img src="https://img.icons8.com/color/48/000000/edit--v3.png"  alt="green iguana"
+                                    <img src="https://img.icons8.com/color/48/000000/edit--v3.png" alt="green iguana"
                                          className={classes.icon} onClick={() => handleClickOpen(post.id)}/>
-                                    <img src="https://img.icons8.com/color/48/000000/filled-trash.png"  alt="green iguana"
+                                    <img src="https://img.icons8.com/color/48/000000/filled-trash.png"
+                                         alt="green iguana"
                                          className={classes.icon} onClick={() => handleDeleteItem(post.id)}/>
 
                                 </CardActions>
@@ -110,31 +117,17 @@ const BlogCard = (props) => {
                     ))}
                 </Row>
                 <div style={{textAlign: "center"}}>
-                    <button type={"submit"} onClick={() => handleMore()} style={{width:"100%",backgroundColor:"#d8c0f5"}}
+                    <button type={"submit"} onClick={() => handleMore()}
+                            style={{width: "100%", backgroundColor: "#d8c0f5"}}
                             className="btn  my-5 text-center pl-5">
                         Get more...
                     </button>
                 </div>
-
                 <div>
-                    <Dialog open={open} onClose={() => handleClose()} PaperComponent={PaperComponent}
-                            aria-labelledby="draggable-dialog-title">
-                        <DialogTitle id="draggable-dialog-title">Subscribe</DialogTitle>
-                        <DialogContent>
-                            <DialogContentText>Change my info...</DialogContentText>
-                            <TextField margin="dense" name="title" label="Title" type="text" fullWidth
-                                       value={currentPost.title}
-
-                                       onChange={({target: {value}}) => currentPost.title = value}/>
-                            <TextField margin="dense" name="body" label="Body" type="text" fullWidth
-                                       value={currentPost.body}
-                                       onChange={({target: {value}}) => currentPost.body = value}/>
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={() => handleClose()} color="primary">Close</Button>
-                            <Button onClick={() => handleEdit()} color="primary">Güncelle</Button>
-                        </DialogActions>
-                    </Dialog>
+                    {currentPost && (
+                        <BlogCardDialog open={open} currentPost={currentPost} handleClose={handleClose}
+                                        handleEdit={handleEdit} valueChange={valueChange}/>
+                    )}
                 </div>
             </Container>
         </div>
