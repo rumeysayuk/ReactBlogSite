@@ -21,7 +21,7 @@ export default makeStyles((theme) => ({
     header: {
         display: "flex",
         justifyContent: "space-between",
-        boxShadow: "rgba(149, 157, 165, 0.2) 15px 8px 24px;"
+        boxShadow: "rgba(149, 157, 165, 0.7) 15px 8px 24px;"
     },
     body: {
         background: "#2B2E37",

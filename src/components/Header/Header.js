@@ -12,8 +12,7 @@ const Header = () => {
     }
     return (
         <Container className={classes.header}>
-            <img src="https://picsum.photos/200/300?random=" className={classes.logo} style={{marginTop: 10}}
-                 alt="logo"/>
+           <h1 className="mt-3 ">MY SITE</h1>
             <div className={classes.search}>
                 <Search/>
                 <InputBase

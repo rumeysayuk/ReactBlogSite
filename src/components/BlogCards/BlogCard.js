@@ -92,8 +92,7 @@ const BlogCard = (props) => {
                                 <CardMedia
                                     className={classes.img}
                                     component="img"
-                                    height="300"
-                                    src={`https://picsum.photos/200/300?random=${post.id}`}
+                                    src={`https://picsum.photos/220/150?random=${post.id}`}
                                     alt="green iguana"
                                 />
                                 <CardContent>
@@ -118,7 +117,7 @@ const BlogCard = (props) => {
                 </Row>
                 <div style={{textAlign: "center"}}>
                     <button type={"submit"} onClick={() => handleMore()}
-                            style={{width: "100%", backgroundColor: "#d8c0f5"}}
+                            style={{backgroundColor: "#d8c0f5"}}
                             className="btn  my-5 text-center pl-5">
                         Get more...
                     </button>
