@@ -5,7 +5,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Projemin canlıdaki linki :
 
-[LIVE](https://peaceful-brahmagupta-2be7d0.netlify.app/)
+[LIVE](https://rumeysayuk1.netlify.app/)
 
 ## Available Scripts
 
